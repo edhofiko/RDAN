@@ -1,4 +1,4 @@
-from Classifier import HierGRUTextClassifier
+from Classifier import DANGRUTextClassifier
 from Vectorizer import word2vec
 from NeuralNetwork.Layer import OneHotter
 import random
@@ -9,7 +9,7 @@ import numpy as np
 vectorizer = word2vec.load("data/word2vec_skipgram.pkl")
 
 data = pd.read_csv("data/data_berita_prep.csv")
-gps = data.groupby(["kanal"]).head(100).reset_index(drop=True)
+gps = data.groupby(["kanal"]).head(5).reset_index(drop=True)
 
 #l = gps["body"].map(lambda x : max([len(x.split("--"))]))
 
@@ -21,6 +21,6 @@ Y = onehotter(Y)
 
 del data
 
-classifier = HierGRUTextClassifier(vectorizer, 50, 14)
+classifier = DANGRUTextClassifier(vectorizer, 50, 14)
 classifier.fit(X[:], Y[:])
 
